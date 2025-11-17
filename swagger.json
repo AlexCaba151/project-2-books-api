@@ -1,0 +1,485 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Books API",
+    "description": "API for managing books and authors",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Authors",
+      "description": "Authors endpoints"
+    },
+    {
+      "name": "Books",
+      "description": "Books endpoints"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "Root endpoint for health check",
+        "responses": {
+          "200": {
+            "description": "API is running"
+          }
+        }
+      }
+    },
+    "/api/authors/": {
+      "get": {
+        "tags": ["Authors"],
+        "summary": "Get all authors",
+        "description": "Returns the list of all authors",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Author"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Authors"],
+        "summary": "Create a new author",
+        "description": "Creates a new author with the provided data",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Author data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewAuthor"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Author"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/authors/{id}": {
+      "get": {
+        "tags": ["Authors"],
+        "summary": "Get author by ID",
+        "description": "Returns a single author by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Author"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid ID format"
+          },
+          "404": {
+            "description": "Not Found - Author does not exist"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Authors"],
+        "summary": "Update an author",
+        "description": "Updates an existing author by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated author data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewAuthor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Author updated",
+            "schema": {
+              "$ref": "#/definitions/Author"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation failed or invalid ID"
+          },
+          "404": {
+            "description": "Not Found - Author does not exist"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Authors"],
+        "summary": "Delete an author",
+        "description": "Deletes an author by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Author ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Author deleted"
+          },
+          "400": {
+            "description": "Bad Request - Invalid ID format"
+          },
+          "404": {
+            "description": "Not Found - Author does not exist"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/books/": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get all books",
+        "description": "Returns the list of all books",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Book"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Books"],
+        "summary": "Create a new book",
+        "description": "Creates a new book with the provided data",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Book data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewBook"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation failed"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/books/{id}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get book by ID",
+        "description": "Returns a single book by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid ID format"
+          },
+          "404": {
+            "description": "Not Found - Book does not exist"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Books"],
+        "summary": "Update a book",
+        "description": "Updates an existing book by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated book data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewBook"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Book updated",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation failed or invalid ID"
+          },
+          "404": {
+            "description": "Not Found - Book does not exist"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Books"],
+        "summary": "Delete a book",
+        "description": "Deletes a book by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Book ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Book deleted"
+          },
+          "400": {
+            "description": "Bad Request - Invalid ID format"
+          },
+          "404": {
+            "description": "Not Found - Book does not exist"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Author": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "65aa9af85d014896dcd12345"
+        },
+        "name": {
+          "type": "string",
+          "example": "J. K. Rowling"
+        },
+        "bio": {
+          "type": "string",
+          "example": "British author known for the Harry Potter series"
+        },
+        "nationality": {
+          "type": "string",
+          "example": "British"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date",
+          "example": "1965-07-31"
+        }
+      }
+    },
+    "NewAuthor": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "J. K. Rowling"
+        },
+        "bio": {
+          "type": "string",
+          "example": "British author known for the Harry Potter series"
+        },
+        "nationality": {
+          "type": "string",
+          "example": "British"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date",
+          "example": "1965-07-31"
+        }
+      }
+    },
+    "Book": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "65ab12345d014896dcd78910"
+        },
+        "title": {
+          "type": "string",
+          "example": "Harry Potter and the Philosopher's Stone"
+        },
+        "author": {
+          "type": "string",
+          "example": "65aa9af85d014896dcd12345"
+        },
+        "genre": {
+          "type": "string",
+          "example": "Fantasy"
+        },
+        "publishedYear": {
+          "type": "integer",
+          "example": 1997
+        },
+        "pages": {
+          "type": "integer",
+          "example": 223
+        },
+        "isbn": {
+          "type": "string",
+          "example": "9780747532699"
+        },
+        "language": {
+          "type": "string",
+          "example": "English"
+        },
+        "inStock": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "NewBook": {
+      "type": "object",
+      "required": [
+        "title",
+        "author",
+        "genre",
+        "publishedYear",
+        "pages",
+        "isbn",
+        "language"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Harry Potter and the Philosopher's Stone"
+        },
+        "author": {
+          "type": "string",
+          "example": "65aa9af85d014896dcd12345"
+        },
+        "genre": {
+          "type": "string",
+          "example": "Fantasy"
+        },
+        "publishedYear": {
+          "type": "integer",
+          "example": 1997
+        },
+        "pages": {
+          "type": "integer",
+          "example": 223
+        },
+        "isbn": {
+          "type": "string",
+          "example": "9780747532699"
+        },
+        "language": {
+          "type": "string",
+          "example": "English"
+        },
+        "inStock": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    }
+  }
+}
