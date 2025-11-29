@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const authorsController = require('../controllers/authorsController');
+const { isAuthenticated } = require('../middleware/authenticate');
 
+const authorsController = require('../controllers/authorsController');
 /**
  * @swagger
  * tags:
@@ -11,8 +12,8 @@ const authorsController = require('../controllers/authorsController');
 
 router.get('/', authorsController.getAuthors);
 router.get('/:id', authorsController.getAuthorById);
-router.post('/', authorsController.createAuthor);
-router.put('/:id', authorsController.updateAuthor);
-router.delete('/:id', authorsController.deleteAuthor);
+router.post('/', isAuthenticated, authorsController.createAuthor);
+router.put('/:id', isAuthenticated, authorsController.updateAuthor);
+router.delete('/:id', isAuthenticated, authorsController.deleteAuthor);
 
 module.exports = router;
